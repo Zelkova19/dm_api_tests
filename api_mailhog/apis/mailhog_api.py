@@ -13,7 +13,7 @@ class MailhogApi:
 
     def get_api_v2_messages(
             self,
-            limit=5
+            limit=10
     ):
         """
         Get users email
