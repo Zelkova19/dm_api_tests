@@ -49,7 +49,7 @@ class AccountApi:
             json_data
     ):
         """
-        Register new user
+        Change register user email
         :param json_data:
         :return:
         """
