@@ -13,7 +13,7 @@ def test_post_v1_account_login():
 
     # Подготовка пользователя
 
-    login = 'vmenshikov_test_ro_50'
+    login = 'vmenshikov_test_ro_51'
     password = '123456789'
     email = f'{login}@mail.ru'
     json_data = {
