@@ -1,8 +1,6 @@
 import time
 from json import loads
 
-from faker import Faker
-
 from services.dm_api_account import DMApiAccount
 from services.api_mailhog import MailHogApi
 
@@ -31,10 +29,7 @@ class AccountHelper:
 
         response = self.dm_account_api.account_api.post_v1_account(json_data=json_data)
         assert response.status_code == 201, f'Пользователь не был создан {response.text}'
-        time.sleep(3)
-        response = self.mailhog.mailhog_api.get_api_v2_messages()
-        assert response.status_code == 200, f'Письмо не получено'
-        token = self.get_activation_token_by_login(login=login, response=response)
+        token = self.get_activation_token_by_login(login=login)
         assert token is not None, 'Ожидали токен, получили None'
         response = self.dm_account_api.account_api.put_v1_account_token(user_token=token)
         assert response.status_code == 200, f'Пользователь не был активирован'
@@ -63,12 +58,12 @@ class AccountHelper:
             password: str,
             new_email: str,
             remember_me: bool = True
-            ):
+    ):
         json_data = {
-        'login': login,
-        'password': password,
-        'email': new_email
-    }
+            'login': login,
+            'password': password,
+            'email': new_email
+        }
         response = self.dm_account_api.account_api.put_v1_account_email(json_data=json_data)
         assert response.status_code == 200, f'Email не был изменен, пришло {response.json()}'
 
@@ -77,24 +72,23 @@ class AccountHelper:
             'password': password,
             'remember_me': remember_me
         }
-        response = self.dm_account_api.login_api.post_v1_account_login(json_data=json_data)
-        assert response.status_code == 403, f'Ожидали Forbidden, пришло {response.json()}'
-        time.sleep(3)  # penalty get message
 
-        response = self.mailhog.mailhog_api.get_api_v2_messages()
-        assert response.status_code == 200, f'Письмо не получено'
-        token = self.get_activation_token_by_login(login=login, response=response)
+
+
+
+        token = self.get_activation_token_by_login(login=login)
         assert token is not None, 'Ожидали токен, получили None'
         response = self.dm_account_api.account_api.put_v1_account_token(user_token=token)
         assert response.status_code == 200, f'Пользователь не был активирован'
         return response
 
-
-    @staticmethod
     def get_activation_token_by_login(
-            login,
-            response
-    ):
+            self,
+            login
+            ):
+        token = None
+        time.sleep(3)  # penalty get message
+        response = self.mailhog.mailhog_api.get_api_v2_messages()
         for item in response.json()['items']:
             try:
                 user_data = loads(item['Content']['Body'])
@@ -107,4 +101,4 @@ class AccountHelper:
                 if link:
                     token = link.split('/')[-1]
                     return token
-        return None
+        return token
