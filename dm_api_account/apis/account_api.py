@@ -3,7 +3,6 @@ from rest_client.client import RestClient
 
 class AccountApi(RestClient):
 
-
     def post_v1_account(
             self,
             json_data
@@ -16,6 +15,48 @@ class AccountApi(RestClient):
         response = self.post(
             path=f'/v1/account',
             json=json_data
+        )
+        return response
+
+    def get_v1_account(
+            self,
+            **kwargs
+    ):
+        """
+        Get current user
+        :return:
+        """
+        response = self.get(
+            path=f'/v1/account',
+            **kwargs
+        )
+        return response
+
+    def post_v1_account_password(
+            self,
+            **kwargs
+    ):
+        """
+        Reset registered user password
+        :return:
+        """
+        response = self.post(
+            path=f'/v1/account/password',
+            **kwargs
+        )
+        return response
+
+    def put_v1_account_password(
+            self,
+            **kwargs
+    ):
+        """
+        Change registered user password
+        :return:
+        """
+        response = self.put(
+            path=f'/v1/account/password',
+            **kwargs
         )
         return response
 
