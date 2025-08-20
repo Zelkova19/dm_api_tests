@@ -56,6 +56,7 @@ class AccountApi(RestClient):
     def put_v1_account_password(
             self,
             **kwargs
+
     ):
         """
         Change registered user password
@@ -65,8 +66,7 @@ class AccountApi(RestClient):
             path=f'/v1/account/password',
             **kwargs
         )
-        UserEnvelop(**response.json())
-        return response
+        return UserEnvelop(**response.json())
 
     def put_v1_account_token(
             self,
@@ -75,6 +75,7 @@ class AccountApi(RestClient):
     ):
         """
         Activate registered user
+        :param validate_response:
         :param user_token:
         :return:
         """
@@ -96,6 +97,7 @@ class AccountApi(RestClient):
     ):
         """
         Change register user email
+        :param validate_response:
         :param json_data:
         :return:
         """
