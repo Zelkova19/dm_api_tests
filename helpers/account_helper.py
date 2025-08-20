@@ -1,5 +1,5 @@
 import time
-from json import loads
+from json import JSONDecodeError, loads
 
 from dm_api_account.models.login_credentials import LoginCredentials
 from dm_api_account.models.registration import Registration
@@ -163,7 +163,7 @@ class AccountHelper:
         for item in response.json()['items']:
             try:
                 user_data = loads(item['Content']['Body'])
-            except KeyError:
+            except (JSONDecodeError, KeyError):
                 continue
 
             user_login = user_data['Login']
