@@ -3,6 +3,8 @@ from datetime import datetime
 from hamcrest import assert_that, has_property, ends_with, instance_of, has_properties, equal_to, \
     greater_than_or_equal_to
 
+from checkers.http_checkers import check_status_code_http
+
 
 def test_get_v1_account_auth(
         auth_account_helper
@@ -10,7 +12,7 @@ def test_get_v1_account_auth(
     response = auth_account_helper.dm_account_api.account_api.get_v1_account()
     assert_that(response, has_property('resource', has_property('login', ends_with('Roman'))))
     assert_that(response, has_property('resource', has_property('info', '')))
-    assert_that(response,has_property('resource', has_property('registration', instance_of(datetime))))
+    assert_that(response, has_property('resource', has_property('registration', instance_of(datetime))))
 
     assert_that(response, has_property('resource', has_properties(
         {'settings': has_properties({
@@ -30,4 +32,5 @@ def test_get_v1_account_auth(
 def test_get_v1_account_no_auth(
         account_helper
 ):
-    account_helper.dm_account_api.account_api.get_v1_account()
+    with check_status_code_http(401, 'User must be authenticated'):
+        account_helper.dm_account_api.account_api.get_v1_account()
