@@ -61,8 +61,8 @@ class RestClient:
 
         if self.disable_log:
             rest_response = self.session.request(method=method, url=full_url, **kwargs)
+            rest_response.raise_for_status()
             return rest_response
-
         log.msg(
             event='Request',
             method=method,
@@ -84,6 +84,7 @@ class RestClient:
             json=self._get_json(rest_response),
         )
 
+        rest_response.raise_for_status()
         return rest_response
 
     @staticmethod
