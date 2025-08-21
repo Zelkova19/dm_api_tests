@@ -5,7 +5,6 @@ from faker import Faker
 from hamcrest import assert_that, has_property, ends_with, all_of, instance_of, has_properties, equal_to
 
 from checkers.http_checkers import check_status_code_http
-from conftest import prepare_user
 
 faker = Faker()
 
