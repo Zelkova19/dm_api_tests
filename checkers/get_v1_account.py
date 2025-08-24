@@ -9,9 +9,10 @@ class GetV1Account:
     @classmethod
     def get_v1_account(
             cls,
-            response
+            response,
+            login_suffix
     ):
-        assert_that(response, has_property('resource', has_property('login', ends_with('Roman'))))
+        assert_that(response, has_property('resource', has_property('login', ends_with(login_suffix))))
         assert_that(response, has_property('resource', has_property('info', '')))
         assert_that(response, has_property('resource', has_property('registration', instance_of(datetime))))
         assert_that(response, has_property('resource', has_properties(
