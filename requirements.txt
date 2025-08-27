@@ -2,6 +2,7 @@ annotated-types==0.7.0
 certifi==2025.8.3
 charset-normalizer==3.4.2
 curlify==3.0.0
+distconfig3==1.0.1
 Faker==37.5.3
 idna==3.10
 iniconfig==2.1.0
@@ -12,9 +13,13 @@ pydantic_core==2.33.2
 Pygments==2.19.2
 PyHamcrest==2.1.0
 pytest==8.4.1
+PyYAML==6.0.2
 requests==2.32.4
 structlog==25.4.0
+toml==0.10.2
 typing-inspection==0.4.1
 typing_extensions==4.14.1
 tzdata==2025.2
 urllib3==2.5.0
+vyper-config==1.2.1
+watchdog==6.0.0
