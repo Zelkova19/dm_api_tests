@@ -1,6 +1,9 @@
 import time
 from json import JSONDecodeError, loads
 
+import allure
+from pygments.lexers.scripting import all_lua_builtins
+
 from dm_api_account.models.login_credentials import LoginCredentials
 from dm_api_account.models.registration import Registration
 from services.dm_api_account import DMApiAccount
@@ -39,6 +42,7 @@ class AccountHelper:
         self.dm_account_api = dm_account_api
         self.mailhog = mailhog
 
+    @allure.step("Авторизация пользователя")
     def auth_client(
             self,
             login: str,
@@ -50,6 +54,7 @@ class AccountHelper:
         self.dm_account_api.account_api.set_headers(token)
         self.dm_account_api.login_api.set_headers(token)
 
+    @allure.step("Смена пароля")
     def change_password(
             self,
             login: str,
@@ -83,6 +88,7 @@ class AccountHelper:
         )
         assert response.status_code == 200, f'Пришло {response.status_code}, {response.json()}'
 
+    @allure.step('Регистрация нового пользователя')
     def register_new_user(
             self,
             login: str,
@@ -105,6 +111,7 @@ class AccountHelper:
         response = self.dm_account_api.account_api.put_v1_account_token(user_token=token)
         return response
 
+    @allure.step('Аутентификация пользователя')
     def user_login(
             self,
             login: str,
@@ -128,6 +135,7 @@ class AccountHelper:
             assert response.headers['x-dm-auth-token'], 'Токен для пользователя не был получен'
         return response
 
+    @allure.step("Смена почты")
     def change_email(
             self,
             login: str,
