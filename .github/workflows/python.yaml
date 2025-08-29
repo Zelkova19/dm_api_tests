@@ -2,6 +2,11 @@ name: Python Tests
 
 on: [ push, pull_request ]
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   test:
     name: Python tests
@@ -61,4 +66,4 @@ jobs:
         uses: actions/upload-artifact@v4
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy0pages@1.2.9
+        uses: actions/deploy-pages@v1.2.9
