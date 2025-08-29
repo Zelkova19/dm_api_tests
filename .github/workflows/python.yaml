@@ -57,11 +57,6 @@ jobs:
           name: allure-results
           path: ./allure-results
 
-      - name: Generate Allure report without symlinks
-        run: |
-          allure generate ./allure-results -o ./_site --clean
-          find ./_site -type l -delete
-
       - name: Store report
         uses: actions/upload-artifact@v4
         with:
