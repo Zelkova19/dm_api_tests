@@ -2,7 +2,6 @@ import time
 from json import JSONDecodeError, loads
 
 import allure
-from pygments.lexers.scripting import all_lua_builtins
 
 from dm_api_account.models.login_credentials import LoginCredentials
 from dm_api_account.models.registration import Registration
