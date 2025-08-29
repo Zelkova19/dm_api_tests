@@ -25,7 +25,7 @@ jobs:
 
       - name: Run tests
         run: |
-          pytest ./tests --alluredir=../allure-results --disable-warnings
+          pytest ./tests --alluredir=./allure-results --disable-warnings
         continue-on-error: true
 
       - name: Archive allure results
@@ -60,11 +60,11 @@ jobs:
     needs: generate-report
     name: Publish report
     steps:
-      - name: Download allure results
+      - name: Download generated report
         uses: actions/download-artifact@v4
         with:
-          name: allure-results
-          path: ./allure-results
+          name: allure-report
+          path: ./allure-report
       - name: Generate Allure report
         uses: simple-elf/allure-report-action@v1.7
         with:
