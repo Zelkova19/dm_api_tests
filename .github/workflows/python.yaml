@@ -89,3 +89,4 @@ jobs:
         id: deployment
 
         uses: actions/deploy-pages@v4
+      - run: echo "https://zelkova19.github.io/dm_api_tests/"
