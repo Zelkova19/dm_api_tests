@@ -5,6 +5,7 @@ import structlog
 from requests import session, JSONDecodeError
 
 from rest_client.configuration import Configuration
+from rest_client.utillities import allure_attach
 
 
 class RestClient:
@@ -50,6 +51,7 @@ class RestClient:
             ):
         return self._send_request('DELETE', path=path, **kwargs)
 
+    @allure_attach
     def _send_request(
             self,
             method,
