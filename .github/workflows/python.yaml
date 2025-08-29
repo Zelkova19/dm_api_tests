@@ -62,12 +62,16 @@ jobs:
     steps:
       - name: Download allure results
         uses: actions/download-artifact@v4
-      - name: Upload allure report
-        uses: actions/upload-artifact@v4
         with:
-          name: allure-report
-          path: allure-report
-          retention-days: 1
+          name: allure-results
+          path: ./allure-results
+      - name: Generate Allure report
+        uses: simple-elf/allure-report-action@v1.7
+        with:
+          allure_results: allure-results
+          allure_report: allure-report
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v1.2.9
+        uses: actions/deploy-pages@v4.0.5
+        with:
+          artifact_name: allure-report
