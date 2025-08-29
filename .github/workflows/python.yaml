@@ -44,7 +44,7 @@ jobs:
         uses: actions/download-artifact@v4
       - run: allure generate -c allure-results -o _site
       - name: Store report
-        uses: action/upload-artifact@v4
+        uses: actions/upload-artifact@v4
         with:
           name: _site
           path: _site
@@ -56,9 +56,9 @@ jobs:
     name: Publish report
     steps:
       - name: Download allure results
-        uses: action/download-artifact@v4
+        uses: actions/download-artifact@v4
       - name: Upload allure report
-        uses: action/upload-artifact@v4
+        uses: actions/upload-artifact@v4
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: action/deploy0pages@1.2.9
+        uses: actions/deploy0pages@1.2.9
