@@ -32,7 +32,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: allure-results
-          path: allure-results
+          path: ./allure-results
           retention-days: 1
 
   generate-report:
@@ -44,15 +44,28 @@ jobs:
         with:
           distribution: 'microsoft'
           java-version: '17'
-      - run: sudo wget https://github.com/allure-framework/allure2/releases/download/2.34.1/allure-2.34.1.tgz && sudo tar -xvzf allure-2.34.1.tgz -C /opt/ && sudo ln -s /opt/allure-2.34.1/bin/allure /usr/bin/allure
+
+      - name: Install Allure
+        run: |
+          sudo wget https://github.com/allure-framework/allure2/releases/download/2.34.1/allure-2.34.1.tgz
+          sudo tar -xvzf allure-2.34.1.tgz -C /opt/
+          sudo ln -s /opt/allure-2.34.1/bin/allure /usr/bin/allure
+
       - name: Download allure results
         uses: actions/download-artifact@v4
-      - run: allure generate -c allure-results -o _site
+        with:
+          name: allure-results
+          path: ./allure-results
+
+      - name: Generate Allure report
+        run: |
+          allure generate ./allure-results -o ./_site --clean  # Исправил флаги
+
       - name: Store report
         uses: actions/upload-artifact@v4
         with:
-          name: _site
-          path: _site
+          name: allure-report
+          path: ./_site
           retention-days: 1
 
   publish-report:
@@ -65,11 +78,7 @@ jobs:
         with:
           name: allure-report
           path: ./allure-report
-      - name: Generate Allure report
-        uses: simple-elf/allure-report-action@v1.7
-        with:
-          allure_results: allure-results
-          allure_report: allure-report
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4.0.5
