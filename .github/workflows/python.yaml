@@ -60,7 +60,7 @@ jobs:
       - name: Store report
         uses: actions/upload-artifact@v4
         with:
-          name: allure-report
+          name: _site
           path: ./_site
           retention-days: 1
 
