@@ -6,9 +6,11 @@ certifi==2025.8.3
 charset-normalizer==3.4.2
 curlify==3.0.0
 distconfig3==1.0.1
+environs==14.3.0
 Faker==37.5.3
 idna==3.10
 iniconfig==2.1.0
+marshmallow==4.0.1
 packaging==25.0
 pluggy==1.6.0
 pydantic==2.11.7
@@ -16,9 +18,14 @@ pydantic_core==2.33.2
 Pygments==2.19.2
 PyHamcrest==2.1.0
 pytest==8.4.1
+python-dotenv==1.1.1
 PyYAML==6.0.2
 requests==2.32.4
+rootpath==0.1.0
+setuptools==80.9.0
+six==1.17.0
 structlog==25.4.0
+swagger-coverage @ https://github.com/Zelkova19/swagger-coverage-py/archive/refs/heads/master.zip
 toml==0.10.2
 typing-inspection==0.4.1
 typing_extensions==4.14.1
