@@ -5,7 +5,7 @@ from typing import List, Any, Optional
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from dm_api_account.models.user_envelope import UserRole, Rating
+from clients.http.dm_api_account.models.user_envelope import UserRole, Rating
 
 
 class UserDetailsEnvelope(BaseModel):
