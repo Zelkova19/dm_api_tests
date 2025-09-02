@@ -1,3 +1,4 @@
+import os
 from collections import namedtuple
 from pathlib import Path
 
@@ -7,12 +8,13 @@ from vyper import v
 import pytest
 
 from helpers.account_helper import AccountHelper
+from packages.notifier.bot import send_file
 from tests.functional import *
 
 import structlog
 
-from rest_client.configuration import Configuration as MailhogConfiguration
-from rest_client.configuration import Configuration as DmApiConfiguration
+from packages.rest_client.configuration import Configuration as MailhogConfiguration
+from packages.rest_client.configuration import Configuration as DmApiConfiguration
 from services.dm_api_account import DMApiAccount
 from services.api_mailhog import MailHogApi
 
@@ -27,6 +29,8 @@ options = (
     'service.mailhog',
     'user.login',
     'user.password',
+    'telegram.chat_id',
+    'telegram.token'
 )
 
 @pytest.fixture(scope="session", autouse=True)
@@ -36,6 +40,7 @@ def setup_swagger_coverage():
     yield
     reporter.generate_report()
     reporter.cleanup_input_files()
+    send_file()
 
 @pytest.fixture(scope="session", autouse=True)
 def set_config(
@@ -48,6 +53,10 @@ def set_config(
     v.read_in_config()
     for option in options:
         v.set(f"{option}", request.config.getoption(f"--{option}"))
+    os.environ["TELEGRAM_BOT_CHAT_ID"] = v.get("telegram.chat_id")
+    os.environ["TELEGRAM_BOT_ACCESS_TOKEN"] = v.get("telegram.token")
+    request.config.stash["telegram-notifier-addfields"]["enviroment"] = config_name
+    request.config.stash["telegram-notifier-addfields"]["report"] = "https://zelkova19.github.io/dm_api_tests/"
 
 
 def pytest_addoption(
