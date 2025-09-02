@@ -8,6 +8,7 @@ from vyper import v
 import pytest
 
 from helpers.account_helper import AccountHelper
+from packages.notifier.bot import send_file
 from tests.functional import *
 
 import structlog
@@ -39,6 +40,7 @@ def setup_swagger_coverage():
     yield
     reporter.generate_report()
     reporter.cleanup_input_files()
+    send_file()
 
 @pytest.fixture(scope="session", autouse=True)
 def set_config(
